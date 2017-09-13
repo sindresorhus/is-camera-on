@@ -1,6 +1,11 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
-	name: "IsCameraOn"
+	name: "IsCameraOn",
+	targets: [
+		.target(
+			name: "IsCameraOn"
+		)
+	]
 )
