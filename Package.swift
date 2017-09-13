@@ -3,9 +3,13 @@ import PackageDescription
 
 let package = Package(
 	name: "IsCameraOn",
-	targets: [
-		.target(
-			name: "IsCameraOn"
+	products: [
+		.library(
+			name: "IsCameraOn",
+			targets: ["IsCameraOn"]
 		)
+	],
+	targets: [
+		.target(name: "IsCameraOn")
 	]
 )
