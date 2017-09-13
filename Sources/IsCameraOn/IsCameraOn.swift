@@ -9,13 +9,14 @@ private func getCameraProp() -> CMIOObjectID? {
 		mElement: CMIOObjectPropertyElement(kCMIOObjectPropertyElementMaster)
 	)
 
-	var (dataSize, dataUsed) = (UInt32(0), UInt32(0))
+	var dataSize: UInt32 = 0
+	var dataUsed: UInt32 = 0
 	var result = CMIOObjectGetPropertyDataSize(CMIOObjectID(kCMIOObjectSystemObject), &opa, 0, nil, &dataSize)
 	var devices: UnsafeMutableRawPointer?
 
 	repeat {
-		if devices != nil {
-			free(devices)
+		if let devicesStrong = devices {
+			free(devicesStrong)
 			devices = nil
 		}
 
@@ -32,7 +33,9 @@ private func getCameraProp() -> CMIOObjectID? {
 		}
 	}
 
-	free(devices)
+	if let devices = devices {
+		free(devices)
+	}
 
 	return cameraId
 }
@@ -48,9 +51,10 @@ public func isCameraOn() -> Bool {
 		mElement: CMIOObjectPropertyElement(kCMIOObjectPropertyElementWildcard)
 	)
 
-	var isUsed: Bool?
+	var isUsed = false
 
-	var (dataSize, dataUsed) = (UInt32(0), UInt32(0))
+	var dataSize: UInt32 = 0
+	var dataUsed: UInt32 = 0
 	var result = CMIOObjectGetPropertyDataSize(camera, &opa, 0, nil, &dataSize)
 	if result == OSStatus(kCMIOHardwareNoError) {
 		if let data = malloc(Int(dataSize)) {
@@ -60,5 +64,5 @@ public func isCameraOn() -> Bool {
 		}
 	}
 
-	return isUsed ?? false
+	return isUsed
 }
