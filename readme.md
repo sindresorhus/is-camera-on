@@ -17,7 +17,7 @@ This module can be useful to check if the camera is already in use or notify you
 Add the following to `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/sindresorhus/is-camera-on", from: "2.0.0")
+.package(url: "https://github.com/sindresorhus/is-camera-on", from: "2.0.2")
 ```
 
 [Or add the package in Xcode.](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
