@@ -1,5 +1,3 @@
-import Foundation
-import AVFoundation
 import CoreMediaIO
 
 private func getCameraProp() -> CMIOObjectID? {
@@ -14,6 +12,12 @@ private func getCameraProp() -> CMIOObjectID? {
 	var result = CMIOObjectGetPropertyDataSize(CMIOObjectID(kCMIOObjectSystemObject), &opa, 0, nil, &dataSize)
 	var devices: UnsafeMutableRawPointer?
 
+	defer {
+		if let devices {
+			free(devices)
+		}
+	}
+
 	repeat {
 		if let devicesStrong = devices {
 			free(devicesStrong)
@@ -26,15 +30,11 @@ private func getCameraProp() -> CMIOObjectID? {
 
 	var cameraId: CMIOObjectID?
 
-	if let devices = devices {
+	if let devices {
 		for offset in stride(from: 0, to: dataSize, by: MemoryLayout<CMIOObjectID>.size) {
 			let current = devices.advanced(by: Int(offset)).assumingMemoryBound(to: CMIOObjectID.self)
 			cameraId = current.pointee
 		}
-	}
-
-	if let devices = devices {
-		free(devices)
 	}
 
 	return cameraId
