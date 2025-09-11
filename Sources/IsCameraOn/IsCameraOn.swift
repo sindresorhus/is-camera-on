@@ -2,6 +2,7 @@ import CoreMediaIO
 
 private enum TransportType: UInt32 {
 	case builtIn = 0x626C746E // 'bltn'
+	case usb = 0x75736220 // 'usb '
 	case virtual = 0x76697274 // 'virt'
 }
 
@@ -38,6 +39,14 @@ private struct CameraDevice {
 
 	var isBuiltIn: Bool {
 		transportType == .builtIn
+	}
+	
+	var isExternal: Bool {
+		transportType == .usb
+	}
+	
+	var isPhysical: Bool {
+		isBuiltIn || isExternal
 	}
 }
 
@@ -109,13 +118,28 @@ private extension CMIOObjectPropertyAddress {
 }
 
 /**
-Checks if the built-in Mac camera is currently on.
+Checks if a Mac camera is currently on.
 
-Returns `true` if any built-in camera is active, `false` otherwise.
+- Parameter includeExternal: If `true`, checks both built-in and external USB cameras. If `false` (default), only checks built-in cameras for backward compatibility.
+- Returns: `true` if any camera matching the criteria is active, `false` otherwise.
+
+## Examples
+
+Check only built-in camera (default behavior):
+
+```swift
+isCameraOn() // Only built-in cameras
+```
+
+Check all physical cameras:
+
+```swift
+isCameraOn(includeExternal: true) // Built-in and USB cameras
+```
 */
-public func isCameraOn() -> Bool {
+public func isCameraOn(includeExternal: Bool = false) -> Bool {
 	CoreMediaIO.getAllDevices()
 		.map(CameraDevice.init)
-		.filter(\.isBuiltIn)
+		.filter { includeExternal ? $0.isPhysical : $0.isBuiltIn }
 		.contains(where: \.isRunning)
 }

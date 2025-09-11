@@ -1,8 +1,8 @@
 # is-camera-on
 
-> Check if the built-in Mac camera is on
+> Check if a Mac camera is on
 
-The camera is commonly known as FaceTime HD or iSight.
+Supports built-in cameras (FaceTime HD, iSight) and external USB cameras.
 
 This module can be useful to check if the camera is already in use or notify you if it's turned on when you didn't intend it to be.
 
@@ -25,7 +25,12 @@ Add the following to `Package.swift`:
 ```swift
 import IsCameraOn
 
+// Check built-in camera only (default)
 print(isCameraOn())
+//=> true
+
+// Check both built-in and external USB cameras
+print(isCameraOn(includeExternal: true))
 //=> true
 ```
 
