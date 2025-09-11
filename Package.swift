@@ -17,6 +17,10 @@ let package = Package(
 	targets: [
 		.target(
 			name: "IsCameraOn"
+		),
+		.executableTarget(
+			name: "TestCamera",
+			dependencies: ["IsCameraOn"]
 		)
 	]
 )

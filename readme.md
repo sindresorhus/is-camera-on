@@ -29,6 +29,14 @@ print(isCameraOn())
 //=> true
 ```
 
+## Testing
+
+To run the manual test:
+
+```swift
+swift run TestCamera
+```
+
 ## Related
 
 - [node-is-camera-on](https://github.com/sindresorhus/node-is-camera-on) - Node.js wrapper for this module
