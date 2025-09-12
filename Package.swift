@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
 	name: "IsCameraOn",
 	platforms: [
-		.macOS(.v10_13)
+		.macOS(.v10_15)
 	],
 	products: [
 		.library(
@@ -20,7 +20,15 @@ let package = Package(
 		),
 		.executableTarget(
 			name: "TestCamera",
-			dependencies: ["IsCameraOn"]
+			dependencies: [
+				"IsCameraOn"
+			]
+		),
+		.executableTarget(
+			name: "TestAsyncCamera",
+			dependencies: [
+				"IsCameraOn"
+			]
 		)
 	]
 )

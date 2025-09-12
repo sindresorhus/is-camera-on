@@ -1,6 +1,7 @@
 import Foundation
 import IsCameraOn
 
+print("=== Camera Status Polling Test ===")
 // Test built-in camera only
 print("📷 Built-in camera status: \(isCameraOn() ? "ON" : "OFF")")
 

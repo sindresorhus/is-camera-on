@@ -2,13 +2,13 @@
 
 > Check if a Mac camera is on
 
-Supports built-in cameras (FaceTime HD, iSight) and external USB cameras.
+Supports built-in cameras (FaceTime HD, iSight) and external physical cameras (USB, Thunderbolt, Continuity Camera, etc.).
 
 This module can be useful to check if the camera is already in use or notify you if it's turned on when you didn't intend it to be.
 
 ## Requirements
 
-macOS 10.13+
+macOS 10.15+
 
 ## Install
 
@@ -22,6 +22,8 @@ Add the following to `Package.swift`:
 
 ## Usage
 
+### Checking camera status
+
 ```swift
 import IsCameraOn
 
@@ -29,10 +31,28 @@ import IsCameraOn
 print(isCameraOn())
 //=> true
 
-// Check both built-in and external USB cameras
+// Check both built-in and external physical cameras
 print(isCameraOn(includeExternal: true))
 //=> true
 ```
+
+### Monitoring camera status changes
+
+```swift
+import IsCameraOn
+
+// Monitor camera status changes with async/await
+Task {
+	for await isOn in cameraStatusChanges() {
+		print("Camera status: \(isOn ? "ON" : "OFF")")
+	}
+}
+```
+
+Notes:
+- Emits the current status immediately, then only on changes
+- Automatically handles device hot-plugging (cameras being connected/disconnected)
+- Uses property listeners for real-time updates (not polling)
 
 ## Testing
 
@@ -40,6 +60,10 @@ To run the manual test:
 
 ```swift
 swift run TestCamera
+```
+
+```swift
+swift run TestAsyncCamera
 ```
 
 ## Related
