@@ -15,7 +15,7 @@ macOS 10.15+
 Add the following to `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/sindresorhus/is-camera-on", from: "2.0.2")
+.package(url: "https://github.com/sindresorhus/is-camera-on", from: "3.0.0")
 ```
 
 [Or add the package in Xcode.](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
